@@ -13,3 +13,8 @@ __pycache__/
 # ignore demo/Dockerfile
 demo/Dockerfile
 
+# ignore docs
+docs/
+
+# ignore labs
+labs/
