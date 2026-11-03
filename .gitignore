@@ -1,0 +1,15 @@
+# ignore secrets folder
+secrets/
+
+# ignore .env file
+.env
+
+# ignore __pycache__ folders
+__pycache__/
+
+# ignore local venv
+.venv/
+
+# ignore demo/Dockerfile
+demo/Dockerfile
+

@@ -1,0 +1,17 @@
+services:
+  demo:
+    image: fijimet-training-wagtail:latest
+    build:
+      context: ./demo
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./secrets/app.env
+    volumes:
+      - ./demo:/app
+    command: >
+      sh -c "
+        python manage.py migrate --noinput &&
+        python manage.py runserver 0.0.0.0:8000
+      "
