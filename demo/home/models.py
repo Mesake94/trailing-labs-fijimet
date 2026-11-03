@@ -5,6 +5,7 @@ from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField, StreamField
 from wagtail.images import get_image_model_string
 from wagtail.models import Page
+from wagtail.snippets.models import register_snippet
 
 
 class HomePage(Page):
@@ -49,11 +50,19 @@ class WarningPage(Page):
     body = RichTextField()
     issued_at = models.DateTimeField()
     severity = models.CharField(max_length=20, choices=SEVERITY_CHOICES)
+    station = models.ForeignKey(
+        "home.WeatherStation",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="warnings",
+    )
 
     content_panels = Page.content_panels + [
         FieldPanel("summary"),
         FieldPanel("severity"),
         FieldPanel("issued_at"),
+        FieldPanel("station"),
         FieldPanel("body"),
     ]
 
@@ -87,3 +96,22 @@ class ForecastPage(Page):
 
     parent_page_types = ["home.HomePage"]
     subpage_types = []
+
+
+@register_snippet
+class WeatherStation(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=20, help_text="Short station code")
+    island = models.CharField(max_length=100, blank=True)
+
+    panels = [
+        FieldPanel("name"),
+        FieldPanel("code"),
+        FieldPanel("island"),
+    ]
+
+    def __str__(self):
+        return f"{self.name} ({self.code})"
+
+    class Meta:
+        ordering = ["name"]
