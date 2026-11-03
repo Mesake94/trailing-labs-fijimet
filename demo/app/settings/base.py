@@ -28,7 +28,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-
 # Application definition
 
 INSTALLED_APPS = [

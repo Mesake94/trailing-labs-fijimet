@@ -146,4 +146,3 @@ class WeatherStation(models.Model):
 
     class Meta:
         ordering = ["name"]
-

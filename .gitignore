@@ -10,8 +10,6 @@ __pycache__/
 # ignore local venv
 .venv/
 
-# ignore demo/Dockerfile
-demo/Dockerfile
 
 # ignore local sqlite and media
 demo/db.sqlite3
