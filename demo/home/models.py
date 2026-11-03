@@ -1,7 +1,8 @@
 from django.db import models
 
+from wagtail import blocks
 from wagtail.admin.panels import FieldPanel
-from wagtail.fields import RichTextField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.images import get_image_model_string
 from wagtail.models import Page
 
@@ -23,7 +24,7 @@ class HomePage(Page):
         FieldPanel("intro"),
     ]
 
-    subpage_types = ["home.WarningIndexPage"]
+    subpage_types = ["home.WarningIndexPage", "home.ForecastPage"]
 
 
 class WarningIndexPage(Page):
@@ -57,4 +58,32 @@ class WarningPage(Page):
     ]
 
     parent_page_types = ["home.WarningIndexPage"]
+    subpage_types = []
+
+
+class ForecastPage(Page):
+    body = StreamField(
+        [
+            ("summary", blocks.RichTextBlock(required=False)),
+            (
+                "region_outlook",
+                blocks.StructBlock(
+                    [
+                        ("region", blocks.CharBlock()),
+                        ("outlook", blocks.TextBlock()),
+                    ]
+                ),
+            ),
+            ("marine", blocks.RichTextBlock(required=False)),
+            ("hazard", blocks.CharBlock(required=False)),
+        ],
+        use_json_field=True,
+        blank=True,
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("body"),
+    ]
+
+    parent_page_types = ["home.HomePage"]
     subpage_types = []

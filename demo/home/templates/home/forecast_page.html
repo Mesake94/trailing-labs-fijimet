@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-forecastpage{% endblock %}
+
+{% block content %}
+<article class="space-y-6">
+  <header>
+    <p class="text-sm font-semibold uppercase tracking-wide text-slate-500">Public forecast</p>
+    <h1 class="mt-1 text-3xl font-bold tracking-tight text-slate-900">{{ page.title }}</h1>
+  </header>
+
+  <div class="space-y-4">
+    {% for block in page.body %}
+    <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm block-{{ block.block_type }}">
+      {% if block.block_type == "summary" %}
+        <div class="prose prose-slate max-w-none">{{ block.value|richtext }}</div>
+      {% elif block.block_type == "region_outlook" %}
+        <h2 class="text-xl font-semibold text-sky-900">{{ block.value.region }}</h2>
+        <p class="mt-2 text-slate-700">{{ block.value.outlook }}</p>
+      {% elif block.block_type == "marine" %}
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Marine</h2>
+        <div class="prose prose-slate mt-2 max-w-none">{{ block.value|richtext }}</div>
+      {% elif block.block_type == "hazard" %}
+        <p class="rounded-lg bg-amber-50 px-4 py-3 font-semibold text-amber-950">{{ block.value }}</p>
+      {% endif %}
+    </section>
+    {% empty %}
+    <p class="text-slate-500">No forecast content yet.</p>
+    {% endfor %}
+  </div>
+</article>
+{% endblock %}
