@@ -18,29 +18,41 @@
         {% endif %}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        {# Force all links in the live preview panel to be opened in a new tab #}
         {% if request.in_preview_panel %}
         <base target="_blank">
         {% endif %}
 
-        {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
+        <script src="https://cdn.tailwindcss.com"></script>
 
-        {% block extra_css %}
-        {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
+        {% block extra_css %}{% endblock %}
     </head>
 
-    <body class="{% block body_class %}{% endblock %}">
+    <body class="min-h-screen bg-slate-50 text-slate-900 antialiased {% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
-        {% block content %}{% endblock %}
+        <header class="border-b border-slate-200 bg-white">
+            <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4">
+                <a href="/" class="text-lg font-semibold tracking-tight text-sky-800">
+                    FijiMET Weather
+                </a>
+                <nav class="flex flex-wrap gap-4 text-sm font-medium text-slate-600" aria-label="Main">
+                    {% block site_nav %}
+                    <a href="/" class="hover:text-sky-700">Home</a>
+                    {% endblock %}
+                </nav>
+            </div>
+        </header>
 
-        {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+        <main class="mx-auto max-w-5xl px-4 py-8">
+            {% block content %}{% endblock %}
+        </main>
 
-        {% block extra_js %}
-        {# Override this in templates to add extra javascript #}
-        {% endblock %}
+        <footer class="border-t border-slate-200 bg-white">
+            <div class="mx-auto max-w-5xl px-4 py-6 text-sm text-slate-500">
+                FijiMET Wagtail training site
+            </div>
+        </footer>
+
+        {% block extra_js %}{% endblock %}
     </body>
 </html>
