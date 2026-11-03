@@ -14,6 +14,19 @@ class HomePage(Page):
         FieldPanel("intro"),
     ]
 
+    subpage_types = ["home.WarningIndexPage"]
+
+
+class WarningIndexPage(Page):
+    intro = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel("intro"),
+    ]
+
+    parent_page_types = ["home.HomePage"]
+    subpage_types = ["home.WarningPage"]
+
 
 class WarningPage(Page):
     SEVERITY_CHOICES = [
@@ -33,3 +46,6 @@ class WarningPage(Page):
         FieldPanel("issued_at"),
         FieldPanel("body"),
     ]
+
+    parent_page_types = ["home.WarningIndexPage"]
+    subpage_types = []

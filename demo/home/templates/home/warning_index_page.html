@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-warningindexpage{% endblock %}
+
+{% block content %}
+<section class="space-y-6">
+  <header class="space-y-3">
+    <h1 class="text-3xl font-bold tracking-tight text-slate-900">{{ page.title }}</h1>
+    {% if page.intro %}
+    <div class="prose prose-slate max-w-none">
+      {{ page.intro|richtext }}
+    </div>
+    {% endif %}
+  </header>
+
+  <ul class="divide-y divide-slate-200 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+    {% for warning in page.get_children.live %}
+    <li>
+      <a
+        href="{% pageurl warning %}"
+        class="flex items-center justify-between gap-4 px-5 py-4 transition hover:bg-sky-50"
+      >
+        <span class="font-medium text-slate-900">{{ warning.title }}</span>
+        <span class="text-sm text-sky-700">View</span>
+      </a>
+    </li>
+    {% empty %}
+    <li class="px-5 py-8 text-center text-slate-500">No active warnings.</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}
