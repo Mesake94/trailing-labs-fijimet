@@ -22,6 +22,8 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/

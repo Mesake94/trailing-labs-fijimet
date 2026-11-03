@@ -38,6 +38,21 @@
                 <nav class="flex flex-wrap gap-4 text-sm font-medium text-slate-600" aria-label="Main">
                     {% block site_nav %}
                     <a href="/" class="hover:text-sky-700">Home</a>
+                    {% wagtail_site as current_site %}
+                    {% if current_site %}
+                      {% with home=current_site.root_page.specific %}
+                        {% with warning_index=home.get_warning_index %}
+                          {% if warning_index %}
+                          <a href="{% pageurl warning_index %}" class="hover:text-sky-700">Warnings</a>
+                          {% endif %}
+                        {% endwith %}
+                        {% with forecast=home.get_latest_forecast %}
+                          {% if forecast %}
+                          <a href="{% pageurl forecast %}" class="hover:text-sky-700">Forecast</a>
+                          {% endif %}
+                        {% endwith %}
+                      {% endwith %}
+                    {% endif %}
                     {% endblock %}
                 </nav>
             </div>

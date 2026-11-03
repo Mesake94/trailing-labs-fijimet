@@ -4,7 +4,7 @@
 {% block body_class %}template-homepage{% endblock %}
 
 {% block content %}
-<section class="space-y-6">
+<section class="space-y-8">
   <div class="overflow-hidden rounded-xl bg-sky-900 text-white shadow-sm">
     <div class="px-6 py-10">
       <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{{ page.title }}</h1>
@@ -31,5 +31,32 @@
     {{ page.intro|richtext }}
   </section>
   {% endif %}
+
+  {% with latest_warnings=page.get_latest_warnings %}
+  <section class="space-y-4">
+    <div class="flex items-end justify-between gap-4">
+      <h2 class="text-xl font-semibold text-slate-900">Latest warnings</h2>
+      {% with warning_index=page.get_warning_index %}
+        {% if warning_index %}
+        <a href="{% pageurl warning_index %}" class="text-sm font-medium text-sky-700 hover:text-sky-900">
+          View all
+        </a>
+        {% endif %}
+      {% endwith %}
+    </div>
+    <ul class="divide-y divide-slate-200 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      {% for warning in latest_warnings %}
+      <li>
+        <a href="{% pageurl warning %}" class="flex flex-wrap items-center justify-between gap-3 px-5 py-4 hover:bg-sky-50">
+          <span class="font-medium text-slate-900">{{ warning.title }}</span>
+          <span class="text-sm text-slate-500">{{ warning.get_severity_display }}</span>
+        </a>
+      </li>
+      {% empty %}
+      <li class="px-5 py-8 text-center text-slate-500">No active warnings.</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endwith %}
 </section>
 {% endblock %}

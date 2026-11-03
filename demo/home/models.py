@@ -27,6 +27,37 @@ class HomePage(Page):
 
     subpage_types = ["home.WarningIndexPage", "home.ForecastPage"]
 
+    def get_warning_index(self):
+        return (
+            self.get_children()
+            .live()
+            .type(WarningIndexPage)
+            .specific()
+            .first()
+        )
+
+    def get_latest_warnings(self, limit=5):
+        index = self.get_warning_index()
+        if index is None:
+            return WarningPage.objects.none()
+        return (
+            index.get_children()
+            .live()
+            .type(WarningPage)
+            .specific()
+            .order_by("-first_published_at")[:limit]
+        )
+
+    def get_latest_forecast(self):
+        return (
+            self.get_children()
+            .live()
+            .type(ForecastPage)
+            .specific()
+            .order_by("-first_published_at")
+            .first()
+        )
+
 
 class WarningIndexPage(Page):
     intro = RichTextField(blank=True)
@@ -115,3 +146,4 @@ class WeatherStation(models.Model):
 
     class Meta:
         ordering = ["name"]
+

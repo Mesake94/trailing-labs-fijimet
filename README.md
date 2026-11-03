@@ -1,6 +1,8 @@
 # FijiMET Wagtail Docker Training
 
-A Wagtail project configured to run with Docker Compose, plus labs that build a **basic public weather CMS**.
+A Wagtail project configured to run with Docker Compose for a **basic public weather CMS**.
+
+`main` contains the completed app. History is organized as lab commits (`lab 01` … `lab 07`) so instructors can check out earlier checkpoints.
 
 ## Requirements
 
@@ -45,22 +47,23 @@ docker compose run demo python manage.py createsuperuser
 
 ## Labs
 
-Work through the weather-app labs in order:
+Local lab sheets and reference notes live under `labs/` and `docs/` (gitignored). Work through them in order against this codebase; use git history to reset to a prior lab commit if needed.
 
-- [labs/README.md](labs/README.md) — lab path and how to work
-- [docs/Wagtail-Essentials.md](docs/Wagtail-Essentials.md) — reference notes
+| Lab | Topic | Commit message prefix |
+| --- | --- | --- |
+| 01 | Page models | `lab 01:` |
+| 02 | Templates | `lab 02:` |
+| 03 | Warning index / parent-child | `lab 03:` |
+| 04 | Images | `lab 04:` |
+| 05 | StreamField forecasts | `lab 05:` |
+| 06 | Snippets | `lab 06:` |
+| 07 | Publish and site tree | `lab 07:` |
 
-| Lab | Topic |
-| --- | --- |
-| [01](labs/01-page-models.md) | Page models |
-| [02](labs/02-templates-and-rendering.md) | Templates |
-| [03](labs/03-parent-child-warnings.md) | Warning index / parent-child |
-| [04](labs/04-images-and-media.md) | Images |
-| [05](labs/05-streamfield-forecasts.md) | StreamField forecasts |
-| [06](labs/06-snippets-weather-stations.md) | Snippets |
-| [07](labs/07-publish-and-site-tree.md) | Publish and site tree |
+## Tests
 
-`demo/home/models.py` starts with a blank `HomePage` — Lab 01 builds from there.
+```bash
+docker compose run --rm demo python manage.py test home
+```
 
 ## Useful commands
 
@@ -105,5 +108,5 @@ docker compose run demo python manage.py collectstatic --noinput
 - The Wagtail app runs in the Compose service named `demo`.
 - The app uses SQLite (`demo/db.sqlite3`); there is no separate database service.
 - Source is bind-mounted from `./demo` to `/app` for local development.
+- Uploaded media is stored under `demo/media/` (local only).
 - Adjust volumes and ports as needed for local development.
-# trailing-labs-fijimet

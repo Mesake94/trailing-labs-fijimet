@@ -13,6 +13,10 @@ __pycache__/
 # ignore demo/Dockerfile
 demo/Dockerfile
 
+# ignore local sqlite and media
+demo/db.sqlite3
+demo/media/
+
 # ignore docs
 docs/
 
